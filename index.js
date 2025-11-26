@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 const app = express();
 const port = 5000;
@@ -10,7 +10,6 @@ app.use(express.json());
 
 const uri = `${process.env.URL_DB}`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -34,6 +33,14 @@ async function run() {
     app.post("/plant", async (req, res) => {
       const plantData = req.body;
       const result = await plantsCollection.insertOne(plantData);
+      res.send(result);
+    });
+
+    app.delete("/plants/:id", async (req, res) => {
+      const { id } = req.params;
+      const result = await plantsCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
       res.send(result);
     });
 
