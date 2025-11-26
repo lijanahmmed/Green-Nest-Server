@@ -16,26 +16,35 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 async function run() {
   try {
     await client.connect();
 
+    const db = client.db("GreenDB");
+    const plantsCollection = db.collection("plants");
+
+    app.get("/plants", async (req, res) => {
+      const result = await plantsCollection.find().toArray();
+      res.send(result);
+    });
+
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // await client.close();
   }
 }
 run().catch(console.dir);
 
-
-app.get('/', (req, res) => {
-  res.send('Green Nest server is running!!')
-})
+app.get("/", (req, res) => {
+  res.send("Green Nest server is running!!");
+});
 
 app.listen(port, () => {
-  console.log(`Green Nest server is listening on port ${port}`)
-})
+  console.log(`Green Nest server is listening on port ${port}`);
+});
