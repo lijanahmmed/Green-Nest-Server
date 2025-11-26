@@ -43,7 +43,7 @@ Built using **Node.js**, **Express.js**, and **MongoDB**, this server powers all
   https://github.com/lijanahmmed/Green-Nest-Client
 
 - **Live Website:**  
-  https://green-nest-client-zdrj.vercel.app/
+  https://green-nest-client.vercel.app/
 
 - **Server Deploy Link:**  
   https://green-nest-server.vercel.app/
